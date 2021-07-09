@@ -2,15 +2,11 @@
 
 ## 함수형 프로그래밍
 
-[##_Image|kage@AeT8Z/btq8so6hLNx/Y7iDyP42kASwZeTCIgl6i0/img.png|alignCenter|data-origin-width="1400" data-origin-height="621" data-ke-mobilestyle="widthOrigin"|https://cscalfani.medium.com/so-you-want-to-be-a-functional-programmer-part-1-1f15e387e536||_##]
-
 자바 코드를 예제로 들기 전에 먼저 함수형 프로그래밍에 대해서 알아보자. 함수형 프로그래밍이라고 특별할 건 없고 우리가 익숙하게 알고 있는 객체지향프로그래밍이나 절차지향적 프로그래밍과 같은 프로그래밍 패러다임중 하나이다. 객체지향프로그래밍이 객체간 메세지와 협력 관계의 정의로 이루어졌다면 함수형 프로그래밍은 단순히 함수들의 조합으로 이루어진다. 그 함수들은 외부와의 관계는 없고 단지 함수 자신만으로 존재한다. 하지만 함수들의 조합이라는 말은 쉽지만 실제로 함수형 코딩을 잘 하는데는 꽤 높은 러닝 커브를 요구한다. 개인적인 생각에는 객체지향이나 절차지향언어보다 높은 수준의 추상화를 요구하기 때문에 코딩을 하기 앞서 함수형 개발을 위한 사고 능력부터 키워야 하기 때문이 아닐까 생각한다. 이 이야기는 뒤에 나올 예제 코드를 이야기 하면 자연스럽게 이해할 수 있을 것이다. 우선 함수형 코딩 구성하는 몇 가지 요소들에 대해서 알아보자
 
 ## 함수형 코딩 핵심 Keyword
 
 객체지향 언어의 특징을 이야기 할 때 [객체지향의 4대(다형성, 추상화, 캡슐화, 상속성) 요소](https://info.keylimeinteractive.com/the-four-pillars-of-object-oriented-programming)나 [SOLID](https://en.wikipedia.org/wiki/SOLID) 와 같은 5대 원칙을 말한다. 마찬가지로 함수형 프로그래밍 역시 여러 특징들이 있다. 그 중 몇 가지 중요한 요소들을 정리해보겠다.
-
-[##_Image|kage@bPk31F/btq8KblvqPP/gDRSRuasc0GKmeUCkIMAC0/img.png|alignCenter|data-origin-width="1334" data-origin-height="889" data-ke-mobilestyle="widthOrigin"|||_##]
 
 ### Pure Function
 
@@ -75,8 +71,6 @@ HI 무명소졸
 
 여기서 내부 함수에서 외부 함수의 값(greetingType)에 접근하고 scope가 종료해도 계속 접근할 수 있는걸 클로저라고 한다. 예제 에서 서로 다른 인사말 (Hello, Hi) 를 각 각 유지하고 있다. 자세히 언급하지는 않겠지만 클로저 또한 함수형 언어를 구성하는 중요한 컨셉중에 하나이다. 
 
-[##_Image|kage@vlWQ2/btq8IDCZjpr/r62t7tCPHkyvU5tAZOtTK0/img.png|alignLeft|data-origin-width="590" data-origin-height="116" data-ke-mobilestyle="widthOrigin"|내부 함수에서 외부 함수의 변수에 접근하고 있다.||_##]
-
 Immutability
 
 불변성은 변할 수 없는 값을 의미한다. 자바에서는 final 변수를 선언해서 만드는데 그렇다고 final 이 모든 변수에 불변성을 보장하는 것은 아니다. 아래는 자바 예제 코드이다.
@@ -100,8 +94,6 @@ alphabets.add("d");
 ```
 
 Runtime 시에 아래와 같은 오류를 발생시킨다.
-
-[##_Image|kage@rYstJ/btq8NuZ3gSk/1zzUyWU184wUkNOpQ5piq1/img.png|alignLeft|data-origin-width="689" data-origin-height="107" data-ke-mobilestyle="widthOrigin"|||_##]
 
 일반적인 변수 선언외에도 함수로 전달되는 객체들 또한 원본 객체의 값을 변경하면 안 되고 복사한 값을 변경해서 반환한다. 물론 오버헤드는 피할 수 없다. 자바스크립트와 같은 다른 함수형 언어에서는 오버헤드를 줄이기 위해 [영속자료구조(Persistent Data Structures)](https://en.wikipedia.org/wiki/Persistent_data_structure)와 같은 방법을 제공한다. 이런 데이터 불변성이 병렬 처리에서의 데이터 상태에 대한 안전성을 보장한다. 아래는 리스트에 새로운 요소를 추가하면서 불변성을 보장하는 자바 코드의 예제이다.
 
@@ -191,7 +183,6 @@ static BiConsumer<Integer, Integer> iterator = (start, end) -> {
 
 위에 반복문을 함수로 작성한 것은 메서드로 분리한 것과 별반 다를게 없다. 이제 여기서 출력 여부를 검사하는 validation 함수를 인자로 추가해 보겠다. 그 전에 인터페이스를 먼저 정의 해야된다. 위에서 사용한 BiConsumer 인터페이스는 자바에 미리 만들어놓은 람다로 사용하기 위한 인터페이스이다. java.util.function 패키지 안에는 자주 사용할만한 인터페이스들이 정의되어 있다.
 
-[##_Image|kage@GtHE5/btq8ZPCPDjh/qoDQIs7xDF5wQuiecPRcuK/img.png|alignLeft|data-origin-width="341" data-origin-height="621" data-ke-mobilestyle="widthOrigin"|predefine lambda interface||_##]
 
 하지만 여기서 만들 인터페이스는 3개의 인자를 받기 때문에 직접 정의해야된다. 아래는 3개의 인자를 받는 람다 인터페이스이다.
 
@@ -310,7 +301,6 @@ static Function<IntConsumer, Function<IntPredicate, BiConsumer<Integer, Integer>
 
 복잡해 보이지만 한 개씩 살펴보면 이해할 수 있을 것이다. 핵심은 아래 체이닝된 함수 정의이다.
 
-[##_Image|kage@bWqvlC/btq805mVnHy/mqao49IPUVA6CpSo04M7HK/img.png|alignLeft|data-origin-width="1211" data-origin-height="291" data-ke-mobilestyle="widthOrigin"|||_##]
 
 ### Java8 Stream
 
