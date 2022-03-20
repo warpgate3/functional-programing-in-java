@@ -12,7 +12,7 @@
 
 순수 함수는 동일한 입력값에 대해서 항상 같은 값을 반환한다. 또한 전역 변수를 사용하거나 변경해서 예상하지 못한 Side effect를 발생하지 않는다. 아래는 자바 코드 예제이다.
 
-```
+```java
 private String name = "무명소졸"; //Not Pure 
 public String greeting() { 
 	return "Hello " + name; 
@@ -29,7 +29,7 @@ public static String greeting(String name) {
 
 for, while문과 같은 반복문을 사용하지 않는다. 반복문은 안에는 가변적인 값들과 처리에 대한 코드가 섞여 있다. 함수형에서는 반복문 대신 map, filter 같은 함수를 매개변수로 받는 메서드를 이용한다. 아래는 자바코드 예제이다.
 
-```
+```java
 List<Integer> numbers = List.of(1, 2, 3, 4, 5);
 
 //for loop
@@ -49,7 +49,7 @@ for loop 문에서는 idx 와 numbers 의 사이즈와 비교하면서 idx 값�
 
 고차 함수는 말이 어려워 보이지만 간단한 내용이다. 함수를 인자로 받거나 함수를 반환 값으로 이용할 수 있는 것을 말한다. 함수로 반환할 경우 정의하기 어려운 클로저(closure) 개념도 나온다. 아래는 고차 함수와 클로저를 포함한 자바 예제 코드이다.
 
-```
+```java
 Function<String, Function<String, String>> greeting = (greetingText) -> {
     return (name) -> {
         return greetingText + " " + name;
@@ -75,7 +75,7 @@ Immutability
 
 불변성은 변할 수 없는 값을 의미한다. 자바에서는 final 변수를 선언해서 만드는데 그렇다고 final 이 모든 변수에 불변성을 보장하는 것은 아니다. 아래는 자바 예제 코드이다.
 
-```
+```java
 final String name = "무명소졸";
 name = "무명소졸2"; //compile error
 System.out.println(name);
@@ -88,7 +88,7 @@ alphabets.add("d");
 
 값 타입의 변수들은 final 로 선언하면 값 변경시 compile error 오류가 발생하지만 alphabets와 같은 참조 변수들은 final 선언으로 재할당을 막을수 있지만 원소에 값을 추가할 수 있다. 이렇다면 alphabets 은 불변성이 있다 말할 수 없다.  자바와 같은 경우 Collection 객체들은 아래와 같은 방법으로 불변성객체로 만들 수 있다.
 
-```
+```java
 final List<String> alphabets = Collections.unmodifiableList(Arrays.asList("a", "b", "c"));
 alphabets.add("d");
 ```
@@ -97,7 +97,7 @@ Runtime 시에 아래와 같은 오류를 발생시킨다.
 
 일반적인 변수 선언외에도 함수로 전달되는 객체들 또한 원본 객체의 값을 변경하면 안 되고 복사한 값을 변경해서 반환한다. 물론 오버헤드는 피할 수 없다. 자바스크립트와 같은 다른 함수형 언어에서는 오버헤드를 줄이기 위해 [영속자료구조(Persistent Data Structures)](https://en.wikipedia.org/wiki/Persistent_data_structure)와 같은 방법을 제공한다. 이런 데이터 불변성이 병렬 처리에서의 데이터 상태에 대한 안전성을 보장한다. 아래는 리스트에 새로운 요소를 추가하면서 불변성을 보장하는 자바 코드의 예제이다.
 
-```
+```java
 public static void main(String[] args) {
     List<String> alphabets = Arrays.asList("a", "b", "c");
     List<String> newAlphabets = add(alphabets, "d");
@@ -127,7 +127,7 @@ Why Functional Programing ?
 
 정말 간단한 로직이다. 이제 막 시작한 개발자들이라도 이 정도 로직은 쉽게 작성할 수 있다. 아마도 아래 정도의 코드가 될 것이다.
 
-```
+```java
 for (int i = 1; i < 11; i ++) { 
 	if (i % 2 == 0) { 
     	System.out.println(i); 
@@ -137,7 +137,7 @@ for (int i = 1; i < 11; i ++) {
 
 여기서 요구사항이 나와 홀수를 출력하거나 1부터 10이 아니고 100까지 출력하게 변경할려면 로직 자체를 변경해야 한다.
 
-```
+```java
 for (int i = 1; i < 100; i ++) { 
 	if (i % 2 != 0) {//홀수 검사 
     	System.out.println(i); 
@@ -165,7 +165,7 @@ for (int i = 200; i < 300; i ++) {
 
 시작값과 종료값 2개의 입력값을 받는 함수이다.(자바 함수형 인터페이스 사용에 대한 자세한 내용은 생략하겠다.)
 
-```
+```java
 public static void main(String[] args) { 
 	iterator.accept(0, 10); 
 } 
@@ -186,7 +186,7 @@ static BiConsumer<Integer, Integer> iterator = (start, end) -> {
 
 하지만 여기서 만들 인터페이스는 3개의 인자를 받기 때문에 직접 정의해야된다. 아래는 3개의 인자를 받는 람다 인터페이스이다.
 
-```
+```java
 interface ThreeConsumer<T1, T2, T3> { 
 	void accept(T1 t1, T1 t2, T3 t3); 
 }
@@ -194,7 +194,7 @@ interface ThreeConsumer<T1, T2, T3> {
 
 위 인터페이스를 이용해 함수를 정의해보겠다. 3번째 인자는 짝수 여부를 체크하는 함수를 인자로 받는 java.util.functions.IntPredicate 인터페이스를 이용하면된다.
 
-```
+```java
 static ThreeConsumer<Integer, Integer, IntPredicate> fori = (startNum, endNum, validator) -> { 
 	for (int i = startNum; i <= endNum; i++) { 
     	if (validator.test(i)) { 
@@ -206,7 +206,7 @@ static ThreeConsumer<Integer, Integer, IntPredicate> fori = (startNum, endNum, v
 
 이제 실행시켜보자 3번째 람다식이고 축약해서 아래와 같이 간단히 표시할 수 있다.
 
-```
+```java
 fori.accept(1, 10, (n) -> { return n % 2 == 0; }); 
 
 //아래와 같이 간단한 형태로 표현할 수 있다. 
@@ -215,7 +215,7 @@ fori.accept(1, 10, (n) -> n % 2 == 0);
 
 이제 여기서 200 부터 300 까지 홀수만 출력한다면 해당하는 함수만 변경해서 인자로 전달하면 된다.
 
-```
+```java
 //짝수 검사 
 fori.accept(1, 10, (n) -> n % 2 == 0); 
 
@@ -225,7 +225,7 @@ fori.accept(100, 200, (n) -> n % 2 != 0);
 
 이제 표준 출력을 했던 부분도 인자로 받도록 변경하겠다. 인자가 4개이기 때문에 FourthConsumer 인터페이스를 정의해서 사용하자 validation 체크 함수는 java.util.functions.IntConsumer 를 이용하면 된다.
 
-```
+```java
 interface FourthConsumer<T1, T2, T3, T4> { 
 	void accept(T1 t1, T1 t2, T3 t3, T4 t4); 
 } 
@@ -261,7 +261,7 @@ static Consumer fileWriter = (n) -> {/*file writer 로직*/};
 
 이쯤 되면 뭐 함수형 프로그래밍의 장점이 어렴풋이 느껴지는 것 같다. 그런데 뭔가 불만스러운 부분이 있다. 인자가 너무 많다. 여기서 추가로 무언가를 더 해야 된다면 아래와 같이 되는건가?
 
-```
+```java
 //인수가 6개이다 ;; 무엇을 하는 함수인가 
 
 foriactionmore.accept(1, 10, isEven, print, more, moreAndMore);
@@ -271,7 +271,7 @@ foriactionmore.accept(1, 10, isEven, print, more, moreAndMore);
 
 위와 같은 상황을 해결하기 위해서 함수형 언어에서는 Currying을 사용할 수 있다. Currying 은 특별한 API 이나 메서드는 아니고 인자를 여러개 받는 함수를 분리해서 체이닝 시키는 일종의 기법이다. 자세한 설명은 구글에 검색해보면 자세한 자료를 찾을 수 있으니 검색하길 바란다. 아래는 Currying 기법을 이용한 자바 코드이다.
 
-```
+```java
 IntConsumer print = System.out::println; 
 
 IntPredicate isEven = (n) -> n % 2 == 0; 
@@ -306,7 +306,7 @@ static Function<IntConsumer, Function<IntPredicate, BiConsumer<Integer, Integer>
 
 자바8부터 함수형 프로그래밍을 지원하기 위한 개념이 들어갔고 우리가 익히 알고있는 Stream 이라는 클래스를 지원한다. 위에서 for문을 위해서 정의했던 함수는 사실 InStream 으로 대치 가능하다. 아래 코드는 Stream API를 이용해서 구현한 코드이다. parallel() 를 이용하면 병렬처리 또한 쉽게 가능하다.
 
-```
+```java
 IntConsumer print = System.out::println; 
 IntPredicate isGraterThanFive = (n) -> n > 5; 
 
